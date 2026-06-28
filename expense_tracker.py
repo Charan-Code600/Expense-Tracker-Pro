@@ -2,6 +2,7 @@
 
 
 
+
 import os
 from datetime import datetime
 import pandas as pd
@@ -34,25 +35,33 @@ while True:
     option = (input("Choose: "))
     
     if option == "1":
-        deposit = int(input("Add Income:"))
-        if deposit > 0: 
-            balance += deposit
-            history.append(f"Income: ₹{deposit} | {datetime.now().strftime('%d-%m-%Y')}")
-            print(f"✅ ₹{deposit} Added! 💰 Balance: ₹{balance}")
-            df = pd.DataFrame(history, columns=["Transaction"])
-            df.to_csv("expenses.csv", index=False)
-            with open("balance.txt", "w") as f:
-                f.write(str(balance))
+        try:
+            deposit = int(input("Add Income:"))
+            if deposit > 0: 
+                balance += deposit
+                history.append(f"Income: ₹{deposit} | {datetime.now().strftime('%d-%m-%Y')}")
+                print(f"✅ ₹{deposit} Added! 💰 Balance: ₹{balance}")
+                df = pd.DataFrame(history, columns=["Transaction"])
+                df.to_csv("expenses.csv", index=False)
+                with open("balance.txt", "w") as f:
+                    f.write(str(balance))
+        except ValueError:
+            print("❌ Please enter numbers only!")
+            
     elif option == "2":
-        enter = int(input("Add Expense:"))
-        if enter > 0:
-            balance -= enter
-            history.append(f"Expense: ₹{enter} | {datetime.now().strftime('%d-%m-%Y')}")
-            print(f"✅ ₹{enter} Spent! 💰 Balance: ₹{balance}")
-            df = pd.DataFrame(history, columns=["Transaction"])
-            df.to_csv("expenses.csv", index=False)
-            with open("balance.txt", "w") as f:
-                f.write(str(balance))
+        try:
+            enter = int(input("Add Expense:"))
+            if enter > 0:
+                balance -= enter
+                history.append(f"Expense: ₹{enter} | {datetime.now().strftime('%d-%m-%Y')}")
+                print(f"✅ ₹{enter} Spent! 💰 Balance: ₹{balance}")
+                df = pd.DataFrame(history, columns=["Transaction"])
+                df.to_csv("expenses.csv", index=False)
+                with open("balance.txt", "w") as f:
+                    f.write(str(balance))
+        except ValueError:
+            print("❌ Please enter numbers only!") 
+                    
     elif option == "3":
         print(f"💰 Balance: ₹{balance}")
     elif option == "4":
@@ -67,6 +76,9 @@ while True:
         break
     else:
         print("❌ Invalid Option!")
+
+
+
 
 
 
